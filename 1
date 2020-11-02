@@ -1,0 +1,23 @@
+import tweepy
+import csv
+
+print("This is my twt bot")
+ck=''    #enter your consumer keys and access tokens
+cs=''
+ack=''
+acs=''
+auth=tweepy.OAuthHandler(ck,cs)   #authenticating to twitter
+auth.set_access_token(ack,acs)
+api=tweepy.API(auth)              #creating API object
+
+collect=open("collect.txt",'r+') #file to store data
+
+for line in reversed(collect.readlines()):    #reading the last entered data in the file
+    user=line.rstrip()
+    break
+list= api.followers(user, count=2)            #getting last to followers of specified account
+user1= list[0].screen_name
+user2= list[1].screen_name
+print(user2)
+api.update_status("@"+user1+" meet your new friend @"+user2+" :)")    #tweeting a messaga
+collect.write(user2+'\n')  
